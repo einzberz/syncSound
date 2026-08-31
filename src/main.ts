@@ -8,6 +8,7 @@ declare global { interface Window { onYouTubeIframeAPIReady?: () => void; YT?: {
 
 const tracks: Track[] = []; let masterId: string | null = null; let apiReady = false; let timer: number | undefined;
 const $ = <T extends HTMLElement>(selector: string) => document.querySelector<T>(selector)!;
+function makeId() { return globalThis.crypto?.randomUUID?.() ?? `video-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`; }
 
 function setStatus(message: string, state = '') { const node = $('#syncState'); node.className = `sync-state ${state}`; node.querySelector('span')!.textContent = message; }
 function getMaster() { return tracks.find((track) => track.id === masterId) ?? tracks[0]; }
@@ -19,7 +20,7 @@ function emptyState() { const empty = document.createElement('div'); empty.class
 function updateTrackText() { tracks.forEach((track) => { track.card.querySelector('[data-key="master"]')!.textContent = t('master'); track.card.querySelector('[data-key="offset"]')!.textContent = t('offset'); track.card.querySelector('[data-key="volume"]')!.textContent = t('volume'); track.card.querySelector('[data-key="capture"]')!.textContent = t('capture'); }); }
 
 function addTrack(videoId: string, saved?: SavedTrack) {
-  const card = document.createElement('article'); card.className = 'track'; const id = `video-${crypto.randomUUID()}`;
+  const card = document.createElement('article'); card.className = 'track'; const id = makeId();
   const offset = Number.isFinite(saved?.o) ? saved!.o! : 0; const volume = Math.min(100, Math.max(0, Number.isFinite(saved?.v) ? saved!.v! : 100)); const isMaster = saved?.m || !masterId;
   card.innerHTML = `<div class="track-bar"><span class="track-index">TRACK ${String(tracks.length + 1).padStart(2,'0')}</span><label class="master-choice"><input type="radio" name="master" ${isMaster ? 'checked' : ''}><span data-key="master">${t('master')}</span></label><button class="remove-track" aria-label="Remove track">×</button></div><div class="player-wrap"><div class="player" id="${id}"></div></div><div class="track-footer"><div class="track-name">${t('loading')}</div><div class="controls"><div class="offset-group"><span class="control-label" data-key="offset">${t('offset')}</span><div class="offset-box"><input class="offset" type="number" value="${offset}" step="0.05"><small>s</small></div><div class="offset-tools"><button class="nudge" data-value="-0.05">−</button><button class="capture" data-key="capture">${t('capture')}</button><button class="nudge" data-value="0.05">+</button></div></div><label class="volume-group"><span class="control-label" data-key="volume">${t('volume')}</span><input class="volume-range" type="range" min="0" max="100" value="${volume}"><output class="volume-value">${volume}%</output></label><div class="drift"><span>DRIFT</span><output>—</output></div></div></div>`;
   const track: Track = { id, videoId, card, player: null, ready: false, offset, volume }; if (isMaster) masterId = id;
