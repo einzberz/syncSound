@@ -1,0 +1,6 @@
+.git
+.gitignore
+README.md
+start.ps1
+node_modules
+dist

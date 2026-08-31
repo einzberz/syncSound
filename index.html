@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>syncSound — Sync Multiple YouTube Videos</title>
+    <meta name="description" content="syncSound lets you align and play multiple YouTube videos together. Match offsets, control each track's volume, and share a synced session link." />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#181a25" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="canonical" href="https://syncsound.einzberz.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="syncSound" />
+    <meta property="og:title" content="syncSound — Sync Multiple YouTube Videos" />
+    <meta property="og:description" content="Align multiple YouTube videos, adjust offsets and volume, then share the synced session." />
+    <meta property="og:url" content="https://syncsound.einzberz.com/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="syncSound — Sync Multiple YouTube Videos" />
+    <meta name="twitter:description" content="Align multiple YouTube videos and share synced sessions." />
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"syncSound","url":"https://syncsound.einzberz.com/","inLanguage":["th","en","ja","ko","zh-CN"]},{"@type":"WebApplication","name":"syncSound","url":"https://syncsound.einzberz.com/","applicationCategory":"MultimediaApplication","operatingSystem":"Web","description":"A web app for aligning multiple YouTube videos with per-track offsets and volume controls."}]}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <a class="wordmark" href="/">sync<span>Sound</span><i></i></a>
+        <form class="nav-search" id="addForm" aria-label="Add YouTube video">
+          <label class="sr-only" for="youtubeUrl" data-i18n="youtubeLink">YouTube link</label>
+          <input id="youtubeUrl" type="url" placeholder="Paste a YouTube link…" autocomplete="off" required />
+          <button type="submit" title="Add track" aria-label="Add track">＋</button>
+        </form>
+        <div class="header-end">
+          <div class="sync-state" id="syncState"><b></b><span data-i18n="waiting">Waiting for video</span></div>
+          <label class="language-picker"><span class="sr-only" data-i18n="language">Language</span><select id="language" aria-label="Language"><option value="th">ไทย</option><option value="en">EN</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="zh">中文</option></select></label>
+        </div>
+      </header>
+      <section class="transport" aria-label="Playback controls">
+        <button class="transport-button primary" id="playAll" disabled><span>▶</span><span data-i18n="playAll">Play all</span></button>
+        <button class="transport-button" id="pauseAll" disabled><span>Ⅱ</span><span data-i18n="pauseAll">Pause all</span></button>
+        <button class="transport-button share" id="shareLink" disabled><span>↗</span><span id="shareLabel">Share link</span></button>
+        <div class="master-readout"><span data-i18n="masterPlayhead">MASTER PLAYHEAD</span><output id="masterClock">00:00.000</output></div>
+        <button class="transport-button align" id="syncNow" disabled><span>⌁</span><span data-i18n="fixDrift">Fix drift now</span></button>
+      </section>
+      <section class="desk" id="desk" aria-live="polite"><div class="empty-state" id="emptyState"><span>＋</span><p data-i18n="empty">Paste a YouTube link to add the first track</p></div></section>
+      <footer class="guide-footer">
+        <div class="footer-brand"><a class="wordmark" href="/">sync<span>Sound</span><i></i></a><p data-i18n="footerTag">Multiple versions, one moment.</p></div>
+        <section class="guide-steps" aria-labelledby="guide-title">
+          <p class="footer-kicker" id="guide-title" data-i18n="footerHeading">HOW TO USE</p>
+          <ol>
+            <li><b>01</b><span data-i18n="footerStep1">Paste each YouTube link into the bar above.</span></li>
+            <li><b>02</b><span data-i18n="footerStep2">Pick a Master, then capture the same lyric or beat on every other track.</span></li>
+            <li><b>03</b><span data-i18n="footerStep3">Play all. Adjust volume or fine-tune Offset whenever needed.</span></li>
+          </ol>
+          <p class="footer-note" data-i18n="footerNote">YouTube may require one interaction before it can play with sound.</p>
+        </section>
+        <p class="copyright">© 2026 syncSound</p>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
